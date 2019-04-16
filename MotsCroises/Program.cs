@@ -52,13 +52,11 @@ namespace MotsCroises
         }
         static bool CoordonneesValide (int ligne, int colonne, char sens)
         {
-            bool ATester = false;
-
             if (((ligne >= 0) && (ligne < 9)) && ((colonne >= 0) && (colonne <9)) && ((sens == 'h') || (sens == 'v')))
             {
-                ATester = true;
+                return true;
             }
-            return ATester;
+            return false;
         }
         static void LireCoordonnees (out int ligne, out int colonne, out char sens)
         {
@@ -88,17 +86,15 @@ namespace MotsCroises
         }
         static bool LettrePossible (char [,] tab, int ligne, int colonne, char lettre)
         {
-            bool ATester = false;
             Console.WriteLine(tab[ligne, colonne]);
             
             if (('.' == tab[ligne, colonne]) || (lettre == tab[ligne, colonne]))
             {
-                ATester = true;
                 Console.WriteLine("Encodage accepté.");
-                return ATester;
+                return true;
             }
             Console.WriteLine("Encodage refusé.");
-            return ATester;
+            return false;
         }
         static bool EcrireLettre (char [,] tab, int ligne, int colonne, char lettre)
         {
@@ -113,36 +109,95 @@ namespace MotsCroises
             Console.WriteLine("Erreur, la lettre n'a pas été encodée.");
             return TesterLettre;
         }
-        static bool MotPossible (char [,] tab, int ligne, int colonne, char lettre, string mot)
+        static bool MotPossible(char[,] tab, int ligne, int colonne, char lettre, string mot)
         {
-            bool testPosition = CoordonneesValide(ligne, colonne, lettre);
-            bool testLettre = false;
+            int maximum = mot.Count();
+            if (lettre == 'h')
+            {
+                int numlettre = 0;
+                while ((tab[ligne, colonne] != '*') && (colonne < tab.GetLength(1)) && (numlettre < tab.GetLength(1)) && (numlettre < maximum))
+                {
+                    bool ATesterLigne = LettrePossible(tab, ligne, colonne, mot[numlettre]);
+                    colonne++;
+                    numlettre++;
 
+                    if (ATesterLigne == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else if (lettre == 'v')
+            {
+                int NbreLettre = 0;
+                while ((tab[ligne, colonne] != '*') && (ligne < tab.GetLength(0)) && (NbreLettre < tab.GetLength(0)) && (NbreLettre < maximum))
+                {
+                    bool ATesterCol = LettrePossible(tab, ligne, colonne, mot[NbreLettre]);
+                    ligne++;
+                    NbreLettre++;
+
+                    if (ATesterCol == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        static bool EcrireMot (char [,] tab, int ligne, int colonne, char lettre, string mot)
+        {
+            int max = mot.Count();
+            bool TesterMot = MotPossible(tab, ligne, colonne, lettre, mot);
+
+            if (TesterMot == true)
+            {
+                for (int i = ligne; i < max; i++)
+                {
+                    for (int j = colonne; j < max; j++)
+                    {
+                        tab[ligne, colonne] = mot;
+                        Console.WriteLine();
+                    }
+                }
+            }
         }
         static void Main(string[] args)
         {
             // 4 : AfficherGrille
+            Console.WriteLine("Question 4");
             AfficherGrille(ConstruireGrilleDeTest());
 
             // 5 : CoordonneesValide
+            Console.WriteLine("Question 5");
             int ligneCoordonnees = -1;
             int colonneCoordonnees = -1;
-            char sens = 'a';
+            char sens = 'h';
             bool resultCoordonnesValide = CoordonneesValide(ligneCoordonnees, colonneCoordonnees, sens);
 
             // 6 : LireCoordonnes 
+            Console.WriteLine("Question 6");
             LireCoordonnees(out ligneCoordonnees, out colonneCoordonnees, out sens);
 
             // 7 : LettrePossible 
-            int LigneLettrePossible = 0;
-            int ColonneLettrePossible = 0;
+            Console.WriteLine("Question 7");
+            int LigneLettrePossible = 3;
+            int ColonneLettrePossible = 2;
             char ValeurPossible = 'T';
-            LettrePossible(ConstruireGrilleDeTest(), LigneLettrePossible, ColonneLettrePossible, ValeurPossible);
+            LettrePossible(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, ValeurPossible);
 
             // 8 : EcrireLettre
+            Console.WriteLine("Question 8");
             EcrireLettre(ConstruireGrilleDeTest(), LigneLettrePossible, ColonneLettrePossible, ValeurPossible);
 
             // 9 : MotPossible
+            Console.WriteLine("Question 9");
+            string ValMot = "RAT";
+            MotPossible(ConstruireGrilleDeTest(), LigneLettrePossible, ColonneLettrePossible, sens, ValMot);
         }
     }
 }
