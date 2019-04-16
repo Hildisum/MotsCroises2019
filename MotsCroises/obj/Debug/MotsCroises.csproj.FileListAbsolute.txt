@@ -1,0 +1,7 @@
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\bin\Debug\MotsCroises.exe.config
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\bin\Debug\MotsCroises.exe
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\bin\Debug\MotsCroises.pdb
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\obj\Debug\MotsCroises.csprojResolveAssemblyReference.cache
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\obj\Debug\MotsCroises.exe
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\obj\Debug\MotsCroises.pdb
+C:\Users\Goraz\Documents\C#2019\MotsCroises\MotsCroises\obj\Debug\MotsCroises.csproj.CoreCompileInputs.cache
