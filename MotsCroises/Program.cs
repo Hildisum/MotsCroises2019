@@ -152,19 +152,31 @@ namespace MotsCroises
         static bool EcrireMot (char [,] tab, int ligne, int colonne, char lettre, string mot)
         {
             int max = mot.Count();
+            int NumeroLettre = 0;
             bool TesterMot = MotPossible(tab, ligne, colonne, lettre, mot);
 
             if (TesterMot == true)
             {
-                for (int i = ligne; i < max; i++)
+                if (lettre == 'h')
+                {
+                    for (int i = ligne; i < max; i++)
+                    {
+                        tab[ligne, colonne] = mot[NumeroLettre];
+                        NumeroLettre++;
+                    }
+                    return true;
+                }
+                else if (lettre == 'v')
                 {
                     for (int j = colonne; j < max; j++)
                     {
-                        tab[ligne, colonne] = mot;
-                        Console.WriteLine();
+                        tab[ligne, colonne] = mot[NumeroLettre];
+                        NumeroLettre++;
                     }
+                    return true;
                 }
             }
+            return false;
         }
         static void Main(string[] args)
         {
@@ -192,12 +204,18 @@ namespace MotsCroises
 
             // 8 : EcrireLettre
             Console.WriteLine("Question 8");
-            EcrireLettre(ConstruireGrilleDeTest(), LigneLettrePossible, ColonneLettrePossible, ValeurPossible);
+            EcrireLettre(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, ValeurPossible);
+            AfficherGrille(ConstruireGrilleDeTest());
 
             // 9 : MotPossible
             Console.WriteLine("Question 9");
             string ValMot = "RAT";
-            MotPossible(ConstruireGrilleDeTest(), LigneLettrePossible, ColonneLettrePossible, sens, ValMot);
+            MotPossible(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, sens, ValMot);
+
+            Console.WriteLine("Question 10");
+            // 10 EcrireMot
+            EcrireMot(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, sens, ValMot);
+            AfficherGrille(ConstruireGrilleDeTest());
         }
     }
 }
