@@ -207,6 +207,7 @@ namespace MotsCroises
         }
         static void Main(string[] args)
         {
+            char[,] magrille = ConstruireGrilleDeTest();
             // 4 : AfficherGrille
             Console.WriteLine("Question 4");
             AfficherGrille(ConstruireGrilleDeTest());
@@ -224,8 +225,6 @@ namespace MotsCroises
 
             // 7 : LettrePossible 
             Console.WriteLine("Question 7");
-            int LigneLettrePossible = 3;
-            int ColonneLettrePossible = 2;
             char ValeurPossible = 'T';
             LettrePossible(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, ValeurPossible);
 
@@ -241,8 +240,10 @@ namespace MotsCroises
 
             // 10 EcrireMot
             Console.WriteLine("Question 10");
-            EcrireMot(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, sens, ValMot);
-            AfficherGrille(ConstruireGrilleDeTest());
+            AfficherGrille(magrille);
+            EcrireMot(magrille, ligneCoordonnees, colonneCoordonnees, sens, ValMot);
+            // magrille n'est pas modifiée en dehors de ma fonction
+            AfficherGrille(magrille);
 
             // 11 ListeMotsPossibles 
             Console.WriteLine("Question 11");
