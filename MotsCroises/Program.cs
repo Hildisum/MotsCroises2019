@@ -39,7 +39,7 @@ namespace MotsCroises
             Grille[3, 5] = 'T';
             return Grille;
         }
-        static void AfficherGrille(char [,] tab)
+        static void AfficherGrille (char [,] tab)
         {
             for (int i = 0; i < tab.GetLength(0); i++)
             {
@@ -109,7 +109,7 @@ namespace MotsCroises
             Console.WriteLine("Erreur, la lettre n'a pas été encodée.");
             return TesterLettre;
         }
-        static bool MotPossible(char[,] tab, int ligne, int colonne, char lettre, string mot)
+        static bool MotPossible (char[,] tab, int ligne, int colonne, char lettre, string mot)
         {
             int maximum = mot.Count();
             if (lettre == 'h')
@@ -178,6 +178,33 @@ namespace MotsCroises
             }
             return false;
         }
+        static List<string> ListeMotsPossibles (char [,] tab, int ligne, int colonne, char lettre, List<string> ListeMots)
+        {
+            List<string> ListeMotsAVerifier = new List<string>();
+            List<string> ListeMotsCorrects = new List<string>();
+            int NumeroMot = 0;
+            int compteur = 0;
+            bool MotTeste;
+
+            for (int i = 0; i < ListeMots.Count; i++)
+            {
+                ListeMotsAVerifier = ListeMots;
+            }
+
+            while (compteur < ListeMotsAVerifier.Count)
+            {
+                MotTeste = EcrireMot(tab, ligne, colonne, lettre, ListeMotsAVerifier[NumeroMot]);
+                NumeroMot++;
+                compteur++;
+
+                if (MotTeste == true)
+                {
+                    ListeMotsCorrects = ListeMotsAVerifier;
+                }
+            }
+
+            return ListeMotsCorrects;
+        }
         static void Main(string[] args)
         {
             // 4 : AfficherGrille
@@ -212,9 +239,15 @@ namespace MotsCroises
             string ValMot = "RAT";
             MotPossible(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, sens, ValMot);
 
-            Console.WriteLine("Question 10");
             // 10 EcrireMot
+            Console.WriteLine("Question 10");
             EcrireMot(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, sens, ValMot);
+            AfficherGrille(ConstruireGrilleDeTest());
+
+            // 11 ListeMotsPossibles 
+            Console.WriteLine("Question 11");
+            List<string> MaListeDeMotsATester = new List<string>() { "CHEVAL", "NUIT", "TRAVAILLEUR", "NUITEE" };
+            ListeMotsPossibles(ConstruireGrilleDeTest(), ligneCoordonnees, colonneCoordonnees, sens, MaListeDeMotsATester);
             AfficherGrille(ConstruireGrilleDeTest());
         }
     }
